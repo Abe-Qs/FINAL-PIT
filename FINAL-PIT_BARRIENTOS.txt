@@ -98,3 +98,4 @@ printf("\nCash register closed. Have a great day!\n");
     return 0;
 
 }
+
