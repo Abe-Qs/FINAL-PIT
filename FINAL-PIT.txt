@@ -1,0 +1,100 @@
+#include <stdio.h> 
+
+int main() {
+
+    FILE *file;
+    file = fopen("transaction_records.txt", "w");
+
+    if (file == NULL) {
+        printf("Error opening your file.\n");
+        return 1;
+    }
+
+    char customer_name[50];
+    int price_spaghetti = 17;
+    int price_carbonara = 16;
+    int price_cheese = 15;
+
+    char another = 'y';
+
+    while (another == 'y' || another == 'Y') {
+        int quantity_spaghetti, quantity_carbonara, quantity_cheese;
+    
+        printf("\n Welcome to Batak Gurlies Pasta Shop!\n");
+        printf("\n               Menu                  \n");
+        printf("Spaghetti                        P17.00\n");
+        printf("Carbonara                        P16.00\n");
+        printf("Cheese                           P15.00\n");
+    
+    printf("\n \nEnter Customer Name: ");
+    fgets(customer_name, sizeof(customer_name), stdin);
+    fprintf(file, "\n \nCustomer Name: %s", customer_name);
+
+    fprintf(file,"\nOrder History:");
+
+    printf("\nHow many spaghetti? ");
+    scanf("%d", &quantity_spaghetti);
+    fprintf(file, "\n \nSpaghetti: %d", quantity_spaghetti);
+    
+    printf("\nHow many carbonaras? ");
+    scanf("%d", &quantity_carbonara);
+    fprintf(file, "\nCarbonara: %d", quantity_carbonara);
+
+    printf("\nHow many cheese? ");
+    scanf("%d", &quantity_cheese);
+    fprintf(file, "\nCheese: %d", quantity_cheese);
+    
+    int total = (quantity_spaghetti * price_spaghetti) + (quantity_carbonara * price_carbonara) + (quantity_cheese * price_cheese);
+    fprintf(file, "\n \nTotal: %d", total);
+
+    int payment;
+    printf("\nEnter payment amount (in pesos): ");
+    scanf("%d", &payment);
+    fprintf(file, "\nPayment: %d", payment);
+
+    int change = payment - total;
+    fprintf(file, "\nChange: %d", change);
+
+    fprintf(file, "\n \n-----------------------");
+
+    printf("\n Batak Gurlies Pasta Shop\n");
+    printf("-----------------------------\n");
+    printf("Spaghetti x %d = %d pesos\n" , quantity_spaghetti, quantity_spaghetti * price_spaghetti);
+    printf("Carbonara x %d = %d pesos\n" , quantity_carbonara, quantity_carbonara * price_carbonara);
+    printf("Cheese    x %d = %d pesos\n" , quantity_cheese, quantity_cheese * price_cheese);
+    printf("-----------------------------\n");
+    printf("Total:              %d pesos\n", total);
+    printf("Payment:            %d pesos\n", payment);
+
+    if (change >= 0) {
+        printf("Change:             %d pesos\n", change);
+    } else {
+        printf("X Insufficient payment. You still owe %d pesos.\n", -change);
+        printf("\n                BOGUS BUYER !               \n");
+    }
+
+    printf("\nServe another customer? (y/n): ");
+    scanf(" %c", &another);
+    getchar();
+
+    }
+
+    fclose(file);
+
+printf("\nCash register closed. Have a great day!\n");
+
+    file = fopen("transaction_records.txt", "r");
+    if (file == NULL) {
+        printf("Error opening file for reading!\n");
+        return 1;
+    }
+
+    char text[200];
+    while(fgets(text, sizeof(text), file)) {
+        printf("%s", text);
+    }
+
+    fclose(file);
+    return 0;
+
+}
